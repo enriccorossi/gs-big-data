@@ -30,6 +30,41 @@ C -->|Carga Thin Driver| D[(Oracle Database)]
 D -->|Análises| E[Insights Urbanos]
 ```
 
+🚀 Tecnologias Utilizadas
+- Linguagem: Python 3.11+
+- Orquestração: Apache Airflow 3.2.1
+- Conteinerização: Docker & Docker Compose
+- Manipulação de Dados: Pandas, Numpy
+- Banco de Dados: Oracle Database (via oracledb Thin Driver)
+
+📂 Estrutura do Repositório
+📦 satelite-urbano-etl
+ ┣ 📂 dags
+ ┃ ┣ 📜 dag_satelite_urbano.py     # Definição do fluxo (DAG) no Airflow
+ ┃ ┗ 📜 satelite_pipeline.py       # Funções de extração, transformação e carga
+ ┣ 📜 docker-compose.yaml          # Configuração do cluster Airflow
+ ┣ 📜 .env                         # Variáveis de ambiente e UID do Docker
+ ┣ 📜 README.md                    # Documentação do projeto
+ ┗ 📜 scripts_sql.sql              # DDL e DML das tabelas do Oracle
+
+ ⚙️ Como Executar o Projeto
+Pré-requisitos:
+- Docker Desktop instalado e rodando.
+- Python 3.x instalado.
+- Acesso a uma instância do Oracle Database.
+
+1. Preparando o Banco de Dados
+Execute o script abaixo no seu Oracle SQL Developer para criar a tabela receptora:
+CREATE TABLE T_SATELITE_URBANO (
+    id_registro NUMBER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    cidade VARCHAR2(100) NOT NULL,
+    latitude NUMBER(10, 6) NOT NULL,
+    longitude NUMBER(10, 6) NOT NULL,
+    indice_densidade NUMBER(3) NOT NULL,
+    classificacao_zona VARCHAR2(50),
+    data_satelite DATE NOT NULL
+);
+
 2. Configurando o Ambiente
 Clone este repositório e configure as credenciais do banco no arquivo satelite_pipeline.py (linha correspondente à conexão oracledb.makedsn).
 
