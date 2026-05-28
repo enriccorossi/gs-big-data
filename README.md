@@ -30,14 +30,16 @@ C -->|Carga Thin Driver| D[(Oracle Database)]
 D -->|Análises| E[Insights Urbanos]
 ```
 
-🚀 Tecnologias Utilizadas
-- Linguagem: Python 3.11+
-- Orquestração: Apache Airflow 3.2.1
-- Conteinerização: Docker & Docker Compose
-- Manipulação de Dados: Pandas, Numpy
-- Banco de Dados: Oracle Database (via oracledb Thin Driver)
+## 🚀 Tecnologias Utilizadas
+* **Linguagem:** Python 3.11+
+* **Orquestração:** Apache Airflow 3.2.1
+* **Conteinerização:** Docker & Docker Compose
+* **Manipulação de Dados:** Pandas, Numpy
+* **Banco de Dados:** Oracle Database (via `oracledb` Thin Driver)
 
-📂 Estrutura do Repositório
+## 📂 Estrutura do Repositório
+
+```text
 📦 satelite-urbano-etl
  ┣ 📂 dags
  ┃ ┣ 📜 dag_satelite_urbano.py     # Definição do fluxo (DAG) no Airflow
@@ -46,15 +48,18 @@ D -->|Análises| E[Insights Urbanos]
  ┣ 📜 .env                         # Variáveis de ambiente e UID do Docker
  ┣ 📜 README.md                    # Documentação do projeto
  ┗ 📜 scripts_sql.sql              # DDL e DML das tabelas do Oracle
+```
 
- ⚙️ Como Executar o Projeto
-Pré-requisitos:
-- Docker Desktop instalado e rodando.
-- Python 3.x instalado.
-- Acesso a uma instância do Oracle Database.
+## ⚙️ Como Executar o Projeto
 
-1. Preparando o Banco de Dados
+### Pré-requisitos
+* [Docker Desktop](https://www.docker.com/products/docker-desktop/) instalado e rodando.
+* [Python 3.x](https://www.python.org/) instalado.
+* Acesso a uma instância do Oracle Database.
+
+### 1. Preparando o Banco de Dados
 Execute o script abaixo no seu Oracle SQL Developer para criar a tabela receptora:
+```sql
 CREATE TABLE T_SATELITE_URBANO (
     id_registro NUMBER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     cidade VARCHAR2(100) NOT NULL,
@@ -64,28 +69,29 @@ CREATE TABLE T_SATELITE_URBANO (
     classificacao_zona VARCHAR2(50),
     data_satelite DATE NOT NULL
 );
+```
 
-2. Configurando o Ambiente
-Clone este repositório e configure as credenciais do banco no arquivo satelite_pipeline.py (linha correspondente à conexão oracledb.makedsn).
+### 2. Configurando o Ambiente
+Clone este repositório e configure as credenciais do banco no arquivo `satelite_pipeline.py` (linha correspondente à conexão `oracledb.makedsn`).
 
-3. Subindo o Cluster Airflow
+### 3. Subindo o Cluster Airflow
 Abra o terminal na raiz do projeto e execute:
-
+```bash
 # Inicializa o banco de metadados do Airflow
 docker compose up airflow-init
 
 # Sobe todos os serviços (Scheduler, Webserver, Worker)
 docker compose up -d
+```
 
-4. Executando a DAG
- 1. Acesse http://localhost:8080 no seu navegador.
- 2. Login/Senha: airflow / airflow.
- 3. Procure a DAG pipeline_satelite_densidade_urbana.
- 4. Ative a DAG (Unpause) e clique no botão de Trigger (Play).
- 5. Acompanhe a execução pela aba Graph.
+### 4. Executando a DAG
+1. Acesse `http://localhost:8080` no seu navegador.
+2. **Login/Senha:** `airflow` / `airflow`.
+3. Procure a DAG `pipeline_satelite_densidade_urbana`.
+4. Ative a DAG (Unpause) e clique no botão de **Trigger (Play)**.
+5. Acompanhe a execução pela aba **Graph**.
 
-
-👨‍💻 Autores
+## 👨‍💻 Autores
 Projeto desenvolvido para a disciplina de Big Data Architecture & Data Integration - FIAP (Engenharia de Software).
 
 - Enricco Rossi de Souza Carvalho Miranda - RM: 551717
